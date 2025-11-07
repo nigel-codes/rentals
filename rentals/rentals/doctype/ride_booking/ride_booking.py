@@ -6,4 +6,8 @@ from frappe.model.document import Document
 
 
 class RideBooking(Document):
-	pass
+	def validate(self):
+		total_distance = 0
+		for item in self.items:
+			total_distance += item.distance
+
