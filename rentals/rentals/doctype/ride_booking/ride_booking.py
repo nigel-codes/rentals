@@ -1,13 +1,18 @@
 # Copyright (c) 2025, Nigel and contributors
 # For license information, please see license.txt
 
-# import frappe
+import frappe
 from frappe.model.document import Document
 
 
 class RideBooking(Document):
 	def validate(self):
+		if not self.rate:
+			frappe.throw("Please provide a rate")
+
 		total_distance = 0
 		for item in self.items:
-			total_distance += item.distance
+			total_distance += int(item.distance)
+
+		self.total_amount = total_distance * self.rate
 
